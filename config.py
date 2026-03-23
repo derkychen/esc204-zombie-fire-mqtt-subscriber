@@ -28,8 +28,8 @@ class MQTTConfig:
 class InfluxDBConfig:
     """URL and credentials for accessing the local InfluxDB database."""
 
-    URL: str = os.getenv("INFLUX_URL")
-    TOKEN: str = os.getenv("INFLUX_TOKEN")
+    URL: str = os.getenv("INFLUXDB_URL")
+    TOKEN: str = os.getenv("INFLUXDB_TOKEN")
 
     ORG: str = "ignored"  # Parameter required when calling 'post_write'
-    DATABASE: str = os.getenv("INFLUX_DATABASE")
+    DATABASE: str = os.getenv("INFLUXDB_DATABASE")
