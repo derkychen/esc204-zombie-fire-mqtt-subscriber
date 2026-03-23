@@ -4,6 +4,10 @@
 
 set -euo pipefail
 
+set -a
+source .env
+set +a
+
 # Run InfluxDB in background
 influxdb3 &
 INFLUX_PID=$!
@@ -17,7 +21,9 @@ if ! brew services list | grep -q "grafana.*started"; then
 fi
 
 # Poll InfluxDB until it starts up
-until nc -z 127.0.0.1 8181; do
+until curl -fsS \
+  -H "Authorization: Bearer $INFLUXDB_TOKEN" \
+  http://localhost:8181/health >/dev/null; do
   sleep 1
 done
 
