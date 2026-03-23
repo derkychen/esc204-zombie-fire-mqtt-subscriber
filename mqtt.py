@@ -73,7 +73,6 @@ def create_mqtt_client() -> Client:
 
     # Connect to MQTT broker
     broker, port = MQTTConfig.BROKER, MQTTConfig.PORT
-
     mqtt_client.connect(broker, port, keepalive=60)
 
     return mqtt_client

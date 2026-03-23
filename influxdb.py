@@ -36,7 +36,7 @@ def _is_dict_of_fields(data: dict[str, Any]) -> bool:
     return all(isinstance(val, (int, float, bool)) for val in data.values())
 
 
-def _build_point(
+def _create_point(
     measurement_name: str,
     tags: dict[str, str],
     fields: dict[str, Any],
@@ -85,7 +85,7 @@ def _extract_points(
             if len(current_path) >= 3 and current_path[-3] == "sensor_levels":
                 tags["level"] = current_path[-2]
 
-            yield _build_point(measurement_name, tags, fields, time)
+            yield _create_point(measurement_name, tags, fields, time)
 
         # Extract all points from sub-dictionary
         else:
