@@ -19,7 +19,7 @@ class MQTTConfig:
     USERNAME: str = os.getenv("MQTT_USERNAME")
     PASSWORD: str = os.getenv("MQTT_PASSWORD")
 
-    TOPICS: list[str] = tuple(os.getenv("MQTT_TOPICS").split(","))
+    TOPICS: tuple[str, ...] = tuple(os.getenv("MQTT_TOPICS").split(","))
 
 
 @dataclass
