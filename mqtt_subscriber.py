@@ -4,6 +4,7 @@ The main purpose of this module is to expose the 'MQTTSubscriber' wrapper class
 for subscription to MQTT topic(s) and automatic writing to InfluxDB.
 """
 
+import json
 from typing import Any
 
 from paho.mqtt.client import (
@@ -113,7 +114,8 @@ class MQTTSubscriber:
             message: Received message.
         """
         try:
-            self._influx_db_utils.write_payload_from_message(message)
+            payload = json.loads(message.payload.decode("utf-8"))
+            self._influx_db_utils.write_payload(payload)
             print(f"Wrote payload from {message.topic}.")
 
         except Exception as e:

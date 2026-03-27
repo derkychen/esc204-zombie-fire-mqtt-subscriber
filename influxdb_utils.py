@@ -1,11 +1,10 @@
 """Defines utilities used for InfluxDB writing.
 
 The main purpose of this module is to expose its structure-agnostic
-'InfluxDBUtils.write_payload_from_message' function for writing MQTT payloads
+'InfluxDBUtils.write_payload' function for writing MQTT payloads
 into InfluxDB.
 """
 
-import json
 from collections.abc import Iterator
 from datetime import UTC, datetime
 from typing import Any
@@ -161,7 +160,7 @@ class InfluxDBUtils:
             record=point,
         )
 
-    def _write_payload(self, payload: dict[str, Any]) -> None:
+    def write_payload(self, payload: dict[str, Any]) -> None:
         """Write all Point objects yielded to InfluxDB.
 
         Args:
@@ -174,12 +173,3 @@ class InfluxDBUtils:
 
         for point in _extract_points(payload, time, base_tags):
             self._write_point(point)
-
-    def write_payload_from_message(self, message: str) -> None:
-        """Write payload data to InfluxDB from message.
-
-        Args:
-            message: Message received by MQTT subscriber.
-        """
-        payload = json.loads(message.payload.decode("utf-8"))
-        self._write_payload(payload)
