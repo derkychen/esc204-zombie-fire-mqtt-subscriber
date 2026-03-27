@@ -27,8 +27,6 @@ class MQTTSubscriber:
 
     def __init__(self):
         """Initialise MQTT client with relevant attributes."""
-        self._subscribed_topics = {}
-
         self._influx_db_utils = InfluxDBUtils()
         self._mqtt_client = Client(CallbackAPIVersion.VERSION2)
 
