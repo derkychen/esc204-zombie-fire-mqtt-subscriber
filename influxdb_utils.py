@@ -1,8 +1,7 @@
 """Defines utilities used for InfluxDB writing.
 
 The main purpose of this module is to expose its structure-agnostic
-'InfluxDBUtils.write_payload' function for writing MQTT payloads
-into InfluxDB.
+'InfluxDBUtils.write_payload' function for writing MQTT payloads into InfluxDB.
 """
 
 from collections.abc import Iterator
