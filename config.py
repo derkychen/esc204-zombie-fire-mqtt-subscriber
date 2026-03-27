@@ -1,11 +1,9 @@
-"""config.py
-
-Loading environment variables and configurations.
-"""
+"""Loading of environment variables and configurations."""
 
 import os
-from dotenv import load_dotenv
 from dataclasses import dataclass
+
+from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
@@ -21,7 +19,7 @@ class MQTTConfig:
     USERNAME: str = os.getenv("MQTT_USERNAME")
     PASSWORD: str = os.getenv("MQTT_PASSWORD")
 
-    TOPIC: str = os.getenv("MQTT_TOPIC")
+    TOPICS: list[str] = tuple(os.getenv("MQTT_TOPICS").split(","))
 
 
 @dataclass
