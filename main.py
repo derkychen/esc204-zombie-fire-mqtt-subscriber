@@ -1,10 +1,7 @@
-"""main.py
+"""Program entry point."""
 
-Program entry point.
-"""
+from mqtt_subscriber import MQTTSubscriber
 
-from mqtt import create_mqtt_client
-
-# Create MQTT subscriber and listen indefinitely
-mqtt_client = create_mqtt_client()
-mqtt_client.loop_forever()
+mqtt_subscriber = MQTTSubscriber()
+mqtt_subscriber.connect()
+mqtt_subscriber.loop_forever()
