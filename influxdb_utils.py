@@ -1,6 +1,6 @@
 """Defines utilities used for InfluxDB writing.
 
-The main purpose of this module is to expose its structure-agnostic
+The main purpose of this module is to expose its structure-aware
 'InfluxDBUtils.write_payload' function for writing MQTT payloads into InfluxDB.
 """
 
@@ -55,7 +55,7 @@ def _create_point(
         measurement_name: Name of measurement (usually name of the sensor).
         tags: Dictionary of tags for the measurement.
         fields: Dictionary of fields for the measurement
-        time: Timestamp of measurement,
+        time: Timestamp of measurement.
 
     Returns:
         Point object with tags, fields, and timestamp.
@@ -74,52 +74,32 @@ def _create_point(
 
 
 def _extract_points(
-    node: dict[str, Any],
+    data: dict[str, Any],
     time: datetime,
     base_tags: dict[str, str],
-    path: list[str] | None = None,
 ) -> Iterator[Point]:
-    """Recursively extract Point objects from a payload tree.
+    """Extract Point objects from payload data dictionary.
 
     Args:
-        node: Current node in the tree.
+        data: 'data' dictionary within the parsed payload.
         time: Timestamp for all extracted Point objects (from base of payload).
         base_tags: Tags for all extracted Point objects (path from base of
             payload).
-        path: Current traversal path within payload.
 
     Yields:
         Point objects derived from leaf dictionaries.
     """
-    # Initialise path within payload
-    if path is None:
-        path = []
+    for level, sensors in data.items():
+        # Add 'level' tag
+        tags = base_tags | {"level": str(level)}
 
-    for key, val in node.items():
-        if not isinstance(val, dict):
-            continue
-
-        # Record path
-        current_path = path + [key]
-
-        # Add point to Iterator if it is a dictionary of fields
-        if _is_dict_of_fields(val):
-            measurement_name = current_path[-1]
-            tags = dict(base_tags)
-            fields = val
-
-            if len(current_path) >= 3 and current_path[-3] == "sensor_levels":
-                tags["level"] = current_path[-2]
-
-            yield _create_point(measurement_name, tags, fields, time)
-
-        # Extract all points from sub-dictionary
-        else:
-            yield from _extract_points(
-                val,
-                time,
-                base_tags,
-                path=current_path,
+        # Create Points for each sensor
+        for measurement_name, fields in sensors.items():
+            yield _create_point(
+                measurement_name=measurement_name,
+                tags=tags,
+                fields=fields,
+                time=time,
             )
 
 
@@ -169,6 +149,7 @@ class InfluxDBUtils:
         device_id = payload["device_id"]
 
         base_tags = {"device_id": device_id}
+        tree = payload["data"]
 
-        for point in _extract_points(payload, time, base_tags):
+        for point in _extract_points(tree, time, base_tags):
             self._write_point(point)
