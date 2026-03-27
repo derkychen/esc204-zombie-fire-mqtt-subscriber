@@ -1,7 +1,7 @@
 """Defines utilities used for MQTT subscription.
 
-The main purpose of this module is to expose the 'create_mqtt_client' function
-for creating a configured MQTT subscriber.
+The main purpose of this module is to expose the 'MQTTSubscriber' wrapper class
+for subscription to MQTT topic(s) and automatic writing to InfluxDB.
 """
 
 from typing import Any
