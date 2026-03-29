@@ -1,6 +1,6 @@
 # ESC204 Team 0112C Zombie Fire MQTT Subscriber
 
-Team 0112C: Atharv KudChadKar, Charlie Martinez, Derek Chen, Han Fang, Oscar Low, Rooney Cheung
+Team 0112C: Atharv Kudchadkar, Charlie Martinez, Derek Chen, Han Fang, Oscar Low, Rooney Cheung
 
 This repository contains an MQTT subscriber that writes data to a local InfluxDB instance, as well as a JSON for a Grafana dashboard that visualises this data.
 
