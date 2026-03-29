@@ -2,7 +2,7 @@
 
 Team 0112C: Atharv Kudchadkar, Charlie Martinez, Derek Chen, Han Fang, Oscar Low, Rooney Cheung
 
-This repository contains an MQTT subscriber that writes data to a local InfluxDB instance, as well as a JSON for a Grafana dashboard that visualises this data.
+This repository contains an MQTT subscriber that writes data to a local InfluxDB instance, as well as JSON dashboard that can be imported into Grafana that visualises this data.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Clone the repository:
 git clone https://github.com/derkychen/esc204-zombie-fire-mqtt-subscriber.git
 ```
 
-Inside the project directory, run the `uv sync` to install dependencies:
+Inside the project directory, run `uv sync` to install dependencies:
 
 ## Run subscriber
 
