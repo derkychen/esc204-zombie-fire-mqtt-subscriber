@@ -12,7 +12,7 @@ You are on macOS and you have installed:
 * `python3`
 * `uv`
 * `influxdb`
-* `grafana`
+* `grafana` (installed with `brew`)
 
 ## Setup
 
