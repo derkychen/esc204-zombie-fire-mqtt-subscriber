@@ -13,7 +13,7 @@ influxdb3 &
 INFLUX_PID=$!
 
 # Kill InfluxDB upon script exit
-trap 'kill "$INFLUX_PID" 2>/dev/null || true' EXIT
+trap "kill "$INFLUX_PID" 2>/dev/null || true" EXIT
 
 # Start Grafana if not already started
 if ! brew services list | grep -q "grafana.*started"; then
